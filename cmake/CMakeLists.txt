@@ -74,7 +74,7 @@ set(LIBDEXFILE_SOURCES
 )
 
 add_library(libdexfile STATIC ${ANDROID_SOURCES} ${LIBDEXFILE_SOURCES})
-#target_link_libraries(libdexfile log)
+target_link_libraries(libdexfile libartbase libartpalette libziparchive)
 target_include_directories(libdexfile PRIVATE ${LIBDEXFILE_ROOT}
                                               ${libartbase-ndk_SOURCE_DIR}
                                               ${libartpalette-ndk_SOURCE_DIR}/include
