@@ -82,6 +82,8 @@ set(LIBDEXFILE_SOURCES ${LIBDEXFILE_ROOT}/dex/art_dex_file_loader.cc
                        ${LIBDEXFILE_ROOT}/dex/dex_instruction.operator_out.cc
                        ${LIBDEXFILE_ROOT}/dex/dex_instruction_utils.operator_out.cc
                        ${LIBDEXFILE_ROOT}/dex/invoke_type.operator_out.cc
+                       ${LIBDEXFILE_ROOT}/external/dex_file_ext.cc
+                       ${LIBDEXFILE_ROOT}/external/dex_file_supp.cc
 )
 
 add_library(libdexfile STATIC ${ANDROID_SOURCES} ${LIBDEXFILE_SOURCES})
