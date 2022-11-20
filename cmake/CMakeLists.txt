@@ -1,7 +1,23 @@
+if (POLICY CMP0048)
+    cmake_policy(SET CMP0048 NEW)
+endif (POLICY CMP0048)
+
 cmake_minimum_required(VERSION 3.10)
 
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-    include("./CMakeListsConan.txt")
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+# Require out-of-source builds
+file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
+if(EXISTS "${LOC_PATH}")
+    message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file). Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
+endif()
+
+# Set a default build type if none was specified
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to 'Release' as none was specified.")
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
 project(libdexfile LANGUAGES CXX)
@@ -86,15 +102,15 @@ set(LIBDEXFILE_SOURCES ${LIBDEXFILE_ROOT}/dex/art_dex_file_loader.cc
                        ${LIBDEXFILE_ROOT}/external/dex_file_supp.cc
 )
 
-add_library(libdexfile STATIC ${ANDROID_SOURCES} ${LIBDEXFILE_SOURCES})
-target_link_libraries(libdexfile libartbase libartpalette libziparchive libbase)
-target_include_directories(libdexfile PRIVATE ${LIBDEXFILE_ROOT}
-                                              ${libartbase-ndk_SOURCE_DIR}
-                                              ${libartpalette-ndk_SOURCE_DIR}/include
-                                              ${libziparchive-ndk_SOURCE_DIR}/include
-                                              ${libbase-ndk_SOURCE_DIR}/include
+add_library(dexfile STATIC ${ANDROID_SOURCES} ${LIBDEXFILE_SOURCES})
+target_link_libraries(dexfile artbase artpalette ziparchive base)
+target_include_directories(dexfile PRIVATE ${LIBDEXFILE_ROOT}
+                                           ${libartbase-ndk_SOURCE_DIR}
+                                           ${libartpalette-ndk_SOURCE_DIR}/include
+                                           ${libziparchive-ndk_SOURCE_DIR}/include
+                                           ${libbase-ndk_SOURCE_DIR}/include
 )
-target_include_directories(libdexfile PUBLIC ${LIBDEXFILE_ROOT}/external/include)
+target_include_directories(dexfile PUBLIC ${LIBDEXFILE_ROOT}/external/include)
 add_compile_definitions(ART_STACK_OVERFLOW_GAP_arm=8192
                         ART_STACK_OVERFLOW_GAP_arm64=8192
                         ART_STACK_OVERFLOW_GAP_riscv64=8192
@@ -107,8 +123,8 @@ add_compile_definitions(ART_STACK_OVERFLOW_GAP_arm=8192
                         ART_BASE_ADDRESS=32768
 )
 
-set_property(TARGET libdexfile PROPERTY CXX_STANDARD 17)
+set_property(TARGET dexfile PROPERTY CXX_STANDARD 17)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_compile_options(libdexfile PRIVATE $<BUILD_INTERFACE:-Wno-unknown-attributes>)
+    target_compile_options(dexfile PRIVATE $<BUILD_INTERFACE:-Wno-unknown-attributes>)
 endif()
