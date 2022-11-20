@@ -2,7 +2,7 @@ if (POLICY CMP0048)
     cmake_policy(SET CMP0048 NEW)
 endif (POLICY CMP0048)
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -42,7 +42,7 @@ FetchContent_GetProperties(libartpalette-ndk)
 
 FetchContent_Declare(libziparchive-ndk
                      GIT_REPOSITORY git@github.com:MaDeG/libziparchive-ndk.git
-                     GIT_TAG integration
+                     GIT_TAG master
                      GIT_SUBMODULES ""
                      SOURCE_SUBDIR cmake)
 FetchContent_MakeAvailable(libziparchive-ndk)
@@ -111,16 +111,16 @@ target_include_directories(dexfile PRIVATE ${LIBDEXFILE_ROOT}
                                            ${libbase-ndk_SOURCE_DIR}/include
 )
 target_include_directories(dexfile PUBLIC ${LIBDEXFILE_ROOT}/external/include)
-add_compile_definitions(ART_STACK_OVERFLOW_GAP_arm=8192
-                        ART_STACK_OVERFLOW_GAP_arm64=8192
-                        ART_STACK_OVERFLOW_GAP_riscv64=8192
-                        ART_STACK_OVERFLOW_GAP_x86=8192
-                        ART_STACK_OVERFLOW_GAP_x86_64=8192
-                        ART_NDEBUG_OPT_FLAG=-O3
-                        ART_DEFAULT_GC_TYPE=CMC
-                        ART_DEFAULT_COMPACT_DEX_LEVEL=fast
-                        ART_FRAME_SIZE_LIMIT=7400
-                        ART_BASE_ADDRESS=32768
+target_compile_definitions(dexfile PUBLIC ART_STACK_OVERFLOW_GAP_arm=8192
+                                          ART_STACK_OVERFLOW_GAP_arm64=8192
+                                          ART_STACK_OVERFLOW_GAP_riscv64=8192
+                                          ART_STACK_OVERFLOW_GAP_x86=8192
+                                          ART_STACK_OVERFLOW_GAP_x86_64=8192
+                                          ART_NDEBUG_OPT_FLAG=-O3
+                                          ART_DEFAULT_GC_TYPE=CMC
+                                          ART_DEFAULT_COMPACT_DEX_LEVEL=fast
+                                          ART_FRAME_SIZE_LIMIT=7400
+                                          ART_BASE_ADDRESS=32768
 )
 
 set_property(TARGET dexfile PROPERTY CXX_STANDARD 17)
