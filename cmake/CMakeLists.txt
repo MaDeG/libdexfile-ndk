@@ -25,7 +25,7 @@ project(libdexfile LANGUAGES CXX)
 include(FetchContent)
 
 FetchContent_Declare(libartbase-ndk
-                     GIT_REPOSITORY git@github.com:MaDeG/libartbase-ndk.git
+                     GIT_REPOSITORY https://github.com/MaDeG/libartbase-ndk.git
                      GIT_TAG master
                      GIT_SUBMODULES ""
                      SOURCE_SUBDIR cmake)
@@ -33,7 +33,7 @@ FetchContent_MakeAvailable(libartbase-ndk)
 FetchContent_GetProperties(libartbase-ndk)
 
 FetchContent_Declare(libartpalette-ndk
-                     GIT_REPOSITORY git@github.com:MaDeG/libartpalette-ndk.git
+                     GIT_REPOSITORY https://github.com/MaDeG/libartpalette-ndk.git
                      GIT_TAG master
                      GIT_SUBMODULES ""
                      SOURCE_SUBDIR cmake)
@@ -41,7 +41,7 @@ FetchContent_MakeAvailable(libartpalette-ndk)
 FetchContent_GetProperties(libartpalette-ndk)
 
 FetchContent_Declare(libziparchive-ndk
-                     GIT_REPOSITORY git@github.com:MaDeG/libziparchive-ndk.git
+                     GIT_REPOSITORY https://github.com/MaDeG/libziparchive-ndk.git
                      GIT_TAG master
                      GIT_SUBMODULES ""
                      SOURCE_SUBDIR cmake)
@@ -49,7 +49,7 @@ FetchContent_MakeAvailable(libziparchive-ndk)
 FetchContent_GetProperties(libziparchive-ndk)
 
 FetchContent_Declare(libbase-ndk
-                     GIT_REPOSITORY git@github.com:MaDeG/libbase-ndk.git
+                     GIT_REPOSITORY https://github.com/MaDeG/libbase-ndk.git
                      GIT_TAG master
                      GIT_SUBMODULES ""
                      SOURCE_SUBDIR cmake)
